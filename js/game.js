@@ -6,31 +6,43 @@ $(document).ready(function(){
 
 
 let Grid = {	
+	x: 0,
+	y: 0,
 	tamanhoDaCelula: 25,
 	minCelulasX: 0,
 	maxCelulasX: 19,
 	minCelulasY: 0,
-	maxCelulasY: 19
+	maxCelulasY: 19,
+	largura: 500,
+	altura: 500,
+
+	mostrar: function(){
+		ctx.fillStyle = "grey";
+		ctx.fillRect(Grid.x, Grid.y, Grid.largura, Grid.altura);
+		ctx.strokeStyle = "black";
+		ctx.strokeRect(Grid.x, Grid.y, Grid.largura, Grid.altura);
+	}
 }
 
 let Snake = {
 	x: 0,
 	y: 0,
-	velocidadeX: 1,
-	velocidadeY: 0,
 	largura: 25,
 	altura: 25,
 	tamanho: 25,
 	dir: "direita",
+	total = 0,
 
 	mostrar: function(){
 		ctx.fillStyle = "green";
 		ctx.fillRect(Snake.x, Snake.y, Snake.largura, Snake.altura);
+		ctx.strokeStyle = "black";
+		ctx.strokeRect(Snake.x, Snake.y, Snake.largura, Snake.altura);
 	},
 
 	mover : function() {	 
 		if(this.dir == "esquerda"){
-    	this.x -= this.velocidadeX * this.tamanho;
+    	this.x -= this.tamanho;
   	}
   	if(this.dir == "cima"){
     	this.y -= this.tamanho;
@@ -39,7 +51,7 @@ let Snake = {
     	this.y += this.tamanho;
   	}
   	if(this.dir == "direita"){
-    		this.x += this.velocidadeX * this.tamanho;
+    		this.x += this.tamanho;
   	}
   }
 
@@ -50,13 +62,13 @@ function pegarEntrada(event){
 	if(event.keyCode== 37){
 		Snake.dir = "esquerda";
 	}
-	else if(event.keyCode== 38){
+	else if(event.keyCode == 38){
 		Snake.dir = "cima";
 	}
-	else if(event.keyCode== 39){
+	else if(event.keyCode == 39){
 		Snake.dir = "direita";
 	}
-	else if(event.keyCode== 40){
+	else if(event.keyCode == 40){
 		Snake.dir = "baixo";
 	}
 }
@@ -71,6 +83,9 @@ let Comida = {
 	mostrar: function(){
 		ctx.fillStyle = "red";
 		ctx.fillRect(Comida.x, Comida.y, Comida.largura, Comida.altura);
+
+		ctx.strokeStyle = "black";
+		ctx.strokeRect(Comida.x, Comida.y, Comida.largura, Comida.altura);
 	},
 
 	gerar: function(){
@@ -89,15 +104,15 @@ function atualizar(){
 }
 
 function desenhar(){
+
 	cvs = document.getElementById("canvas");
 	ctx = cvs.getContext("2d");
-	
+
+	Grid.mostrar();
 	Snake.mostrar();
-
-	//para mover basta tira o comentario da linha abaixo.
-	//Snake.mover(Snake.dir);
-
+	Snake.mover(Snake.dir);
 	Comida.mostrar();
 }
 
-setInterval(atualizar, 100);
+//para atualizar basta tira o comentario da linha abaixo.
+//setInterval(atualizar, 100);
