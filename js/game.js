@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	var cvs = document.getElementById("canvas");
+	var ctx = cvs.getContext("2d");
 	Comida.gerar();
 });
 
@@ -14,14 +16,49 @@ let Grid = {
 let Snake = {
 	x: 0,
 	y: 0,
-	velocidadeX: 0,
+	velocidadeX: 1,
 	velocidadeY: 0,
 	largura: 25,
 	altura: 25,
+	tamanho: 25,
+	dir: "direita",
 
-	mostrar : function() {
-    return this.largura;
+	mostrar: function(){
+		ctx.fillStyle = "green";
+		ctx.fillRect(Snake.x, Snake.y, Snake.largura, Snake.altura);
+	},
+
+	mover : function() {	 
+		if(this.dir == "esquerda"){
+    	this.x -= this.velocidadeX * this.tamanho;
+  	}
+  	if(this.dir == "cima"){
+    	this.y -= this.tamanho;
+  	}
+  	if(this.dir == "baixo"){
+    	this.y += this.tamanho;
+  	}
+  	if(this.dir == "direita"){
+    		this.x += this.velocidadeX * this.tamanho;
+  	}
   }
+
+}
+
+document.addEventListener("keydown", pegarEntrada);
+function pegarEntrada(event){
+	if(event.keyCode== 37){
+		Snake.dir = "esquerda";
+	}
+	else if(event.keyCode== 38){
+		Snake.dir = "cima";
+	}
+	else if(event.keyCode== 39){
+		Snake.dir = "direita";
+	}
+	else if(event.keyCode== 40){
+		Snake.dir = "baixo";
+	}
 }
 
 let Comida = {
@@ -30,6 +67,11 @@ let Comida = {
 	largura: 25,
 	altura: 25,
 	tamanho: 25,
+
+	mostrar: function(){
+		ctx.fillStyle = "red";
+		ctx.fillRect(Comida.x, Comida.y, Comida.largura, Comida.altura);
+	},
 
 	gerar: function(){
 		this.x = Math.floor(Math.random()* Grid.maxCelulasX + Grid.minCelulasX) * this.tamanho;
@@ -47,16 +89,15 @@ function atualizar(){
 }
 
 function desenhar(){
-	var cvs = document.getElementById("canvas");
-	var ctx = cvs.getContext("2d");
+	cvs = document.getElementById("canvas");
+	ctx = cvs.getContext("2d");
+	
+	Snake.mostrar();
 
-	ctx.fillStyle = "green";
-	ctx.fillRect(0, 0, Snake.largura, Snake.altura);
+	//para mover basta tira o comentario da linha abaixo.
+	//Snake.mover(Snake.dir);
 
-	//inserido comida
-	ctx.fillStyle = "red";
-	ctx.fillRect(Comida.x, Comida.y, Comida.largura, Comida.altura);
+	Comida.mostrar();
 }
-
 
 setInterval(atualizar, 100);
