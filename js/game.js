@@ -17,7 +17,7 @@ let Grid = {
 	altura: 500,
 
 	mostrar: function(){
-		ctx.fillStyle = "grey";
+		ctx.fillStyle = "#3a3335";
 		ctx.fillRect(Grid.x, Grid.y, Grid.largura, Grid.altura);
 		ctx.strokeStyle = "black";
 		ctx.strokeRect(Grid.x, Grid.y, Grid.largura, Grid.altura);
@@ -34,7 +34,7 @@ let Snake = {
 	total: 0,
 
 	mostrar: function(){
-		ctx.fillStyle = "green";
+		ctx.fillStyle = "#63c132";
 		ctx.fillRect(Snake.x, Snake.y, Snake.largura, Snake.altura);
 		ctx.strokeStyle = "black";
 		ctx.strokeRect(Snake.x, Snake.y, Snake.largura, Snake.altura);
@@ -62,6 +62,7 @@ let Snake = {
 
 }
 
+
 document.addEventListener("keydown", pegarEntrada);
 function pegarEntrada(event){
 	if(event.keyCode== 37){
@@ -86,7 +87,7 @@ let Comida = {
 	tamanho: 25,
 
 	mostrar: function(){
-		ctx.fillStyle = "red";
+		ctx.fillStyle = "#d33f49";
 		ctx.fillRect(Comida.x, Comida.y, Comida.largura, Comida.altura);
 
 		ctx.strokeStyle = "black";
@@ -114,8 +115,11 @@ function desenhar(){
 	ctx = cvs.getContext("2d");
 
 	Grid.mostrar();
+
 	Snake.mostrar();
+
 	Snake.mover(Snake.dir);
+
 	Comida.mostrar();
 
 	if(mostrarDistancia(Snake.x, Snake.y, Comida.x, Comida.y) < 1){
