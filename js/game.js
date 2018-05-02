@@ -31,7 +31,7 @@ let Snake = {
 	altura: 25,
 	tamanho: 25,
 	dir: "direita",
-	total = 0,
+	total: 0,
 
 	mostrar: function(){
 		ctx.fillStyle = "green";
@@ -53,6 +53,11 @@ let Snake = {
   	if(this.dir == "direita"){
     		this.x += this.tamanho;
   	}
+  },
+
+  comer: function(){
+  	this.total++;
+  	Comida.gerar();
   }
 
 }
@@ -112,7 +117,12 @@ function desenhar(){
 	Snake.mostrar();
 	Snake.mover(Snake.dir);
 	Comida.mostrar();
+
+	if(mostrarDistancia(Snake.x, Snake.y, Comida.x, Comida.y) < 1){
+		Snake.comer();
+	}
+
 }
 
 //para atualizar basta tira o comentario da linha abaixo.
-//setInterval(atualizar, 100);
+setInterval(atualizar, 100);
