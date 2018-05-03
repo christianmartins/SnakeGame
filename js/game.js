@@ -58,8 +58,28 @@ let Snake = {
   comer: function(){
   	this.total++;
   	Comida.gerar();
-  }
+  },
 
+	checarLimiteDaTela: function (){
+		if(this.x < 0){
+			this.alterarPos(500, this.y, "esquerda");
+		}
+		if(this.x > 500){
+			this.alterarPos(0, this.y, "direita");
+		}
+		if(this.y < 0){
+			this.alterarPos(this.x, 500, "cima");
+		}
+		if(this.y > 500){
+			this.alterarPos(this.x, 0, "baixo");
+		}
+	},
+
+	alterarPos: function(posX, posY, direcao){
+		this.x = posX;
+		this.y = posY;
+		this.dir = direcao;
+	}
 }
 
 
@@ -101,6 +121,8 @@ let Comida = {
 	}
 }
 
+
+
 function mostrarDistancia(xA, yA, xB, yB){
 	return Math.sqrt(Math.pow(xB - xA, 2) + Math.pow(yB - yA, 2));
 }
@@ -117,14 +139,17 @@ function desenhar(){
 	Grid.mostrar();
 
 	Snake.mostrar();
-
 	Snake.mover(Snake.dir);
 
+
 	Comida.mostrar();
+
+
 
 	if(mostrarDistancia(Snake.x, Snake.y, Comida.x, Comida.y) < 1){
 		Snake.comer();
 	}
+	Snake.checarLimiteDaTela();
 
 }
 
