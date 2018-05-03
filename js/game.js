@@ -97,9 +97,9 @@ let Comida = {
 	gerar: function(){
 		this.x = Math.floor(Math.random()* Grid.maxCelulasX + Grid.minCelulasX) * this.tamanho;
 		this.y = Math.floor(Math.random()* Grid.maxCelulasY + Grid.minCelulasY) * this.tamanho;
-		return "X: "+ this.x +"   Y: "+this.y;
 	}
 }
+
 
 function mostrarDistancia(xA, yA, xB, yB){
 	return Math.sqrt(Math.pow(xB - xA, 2) + Math.pow(yB - yA, 2));
